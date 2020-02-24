@@ -17,7 +17,7 @@ public:
         }
         
         bset1 <<= 1;
-        bset1[0] = 1;
+        bset1[0] = b;
     }
     
     //returns number of not set bits in bitset 
