@@ -110,32 +110,32 @@ void garply () noexcept
                     [&](tbb::blocked_range<int> r)
     {
         
-        auto __attribute__((aligned(32))) input_it = vec_a.begin();
-        auto __attribute__((aligned(32))) background_it = vec_b.begin();
+        auto __attribute__((aligned(32))) vec_a_it = vec_a.begin();
+        auto __attribute__((aligned(32))) vec_b_it = vec_b.begin();
         auto __attribute__((aligned(32))) vec_c_it = vec_c.begin();
         auto __attribute__((aligned(32))) it = vec_d.begin();
-        auto __attribute__((aligned(32))) diff_it = vec_f.begin();
-        auto __attribute__((aligned(32))) mask_it = vec_g.begin();
-        auto __attribute__((aligned(32))) output_it = vec_h.begin();
+        auto __attribute__((aligned(32))) vec_f_it = vec_f.begin();
+        auto __attribute__((aligned(32))) vec_g_it = vec_g.begin();
+        auto __attribute__((aligned(32))) vec_h_it = vec_h.begin();
 
-        for (int i=r.begin(); i<r.end(); ++i, input_it++,
-                                                background_it++,
+        for (int i=r.begin(); i<r.end(); ++i, vec_a_it++,
+                                                vec_b_it++,
                                                 vec_c_it++,
                                                 it++,
-                                                diff_it++,
-                                                mask_it++,
-                                                output_it++)
+                                                vec_f_it++,
+                                                vec_g_it++,
+                                                vec_h_it++)
         {
             
 
-            (*diff_it) = (*input_it)-(*background_it);
-            if (((*diff_it) > 0) && ((*input_it) > double{1.0d})){
-                (*output_it) = (((*diff_it) / (*vec_c_it)) > double{1.0d})? ( ((*mask_it)>0)? static_cast<double>(0xFF) : double{0.0d}) : double{0.0d};
+            (*vec_f_it) = (*vec_a_it)-(*vec_b_it);
+            if (((*vec_f_it) > 0) && ((*vec_a_it) > double{1.0d})){
+                (*vec_h_it) = (((*vec_f_it) / (*vec_c_it)) > double{1.0d})? ( ((*vec_g_it)>0)? static_cast<double>(0xFF) : double{0.0d}) : double{0.0d};
                 // (*it) = ((*it) < 0.0d) ? 0.0d : (*it);
             }
             // else {
                 // (*it) = 0;
-                // (*output_it) = 0;
+                // (*vec_h_it) = 0;
             // }
         }
     });
