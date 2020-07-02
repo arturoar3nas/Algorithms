@@ -3,6 +3,7 @@
 #include <string>
 #include <any>
 #include <functional>
+#include <map>
 
 std::unordered_map<std::string, std::any> myMap;
 
@@ -145,5 +146,9 @@ int main()
     Baz baz;
     __attach(&Baz::qux, baz, "baz");
     call("baz");
+    
+    test_1();
+
+    test_2();
 
 }
