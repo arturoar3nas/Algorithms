@@ -53,7 +53,7 @@ template <typename T1, typename T2>
 void __attach(T1 const &f, T2 const &object, std::string str)
 {
   // myMap[str] = std::make_any<T2>(object);
-  myMap[str] = std::function<void()>(std::bind(f, object));
+  myMap[str] = std::function<void()>(std::bind(f, object)); // std::bind returns an unspecified type then need a wrap like std::function
 }
 
 
