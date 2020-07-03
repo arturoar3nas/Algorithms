@@ -66,7 +66,8 @@ void call(std::string s)
     int result = std::any_cast <int (*) (int)> (mapIter->second) (5);
   if(s.compare("bar") == 0)
     std::any_cast <int (*) (int, float, bool)> (mapIter->second) (1, 2.0, true);
-    
+  if(s.compare("key") == 0)
+    std::any_cast<std::function<void()>>(mapIter->second)();
   if(s.compare("baz") == 0)
   {
     try
@@ -131,6 +132,20 @@ void test_2()
     }
 }
 
+template<typename Func, typename... Args>
+std::function<void()> handleFunc_(Func func1, Args... args) {
+    std::function<void()> callBack = [func1, args...]()
+    {
+        (func1)(args...);
+    };
+    return callBack;
+}
+
+template<typename Func, typename... Args>
+void handleFunc(Func func, Args&&... args) {
+    myMap["key"] = handleFunc_(func, args...);
+}
+
 int main()
 {  
 
@@ -150,5 +165,14 @@ int main()
     test_1();
 
     test_2();
+    
+    thud t(1,1);
+    thud t2(2,2);
+    
+    handleFunc([] (int a, int b) { std::cout << a+b; }, 2,3);
+    call("key");
+
+    handleFunc([] (thud a, thud b) { b.Print(); a.Print(); }, std::move(t2), std::move(t));
+    call("key");
 
 }
